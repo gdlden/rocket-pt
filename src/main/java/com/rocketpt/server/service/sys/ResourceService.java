@@ -62,7 +62,7 @@ public class ResourceService extends ServiceImpl<ResourceDao, ResourceEntity> {
             }
 
             list.add(new MenuResourceDTO(menu.getId(), menu.getName(), menu.getUrl(),
-                    menu.getIcon(), menu.getPid()));
+                    menu.getIcon(), menu.getPid(),menu.getType().getCode()));
         }
         return list;
     }
