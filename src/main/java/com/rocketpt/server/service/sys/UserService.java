@@ -28,6 +28,7 @@ import com.rocketpt.server.service.GoogleAuthenticatorService;
 import com.rocketpt.server.service.infra.CheckCodeManager;
 import com.rocketpt.server.service.infra.PasskeyManager;
 import com.rocketpt.server.service.mail.MailService;
+import com.rocketpt.server.util.CollectionUtils;
 import com.rocketpt.server.util.IPUtils;
 import com.rocketpt.server.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -99,6 +101,9 @@ public class UserService extends ServiceImpl<UserDao, UserEntity> {
     }
 
     public List<UserEntity> findUserByIds(List<Integer> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return new ArrayList<>();
+        }
         List<UserEntity> list = listByIds(ids);
         return list;
     }
