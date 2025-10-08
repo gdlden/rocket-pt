@@ -4,19 +4,14 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.rocketpt.server.common.CommonResultStatus;
 import com.rocketpt.server.common.base.Result;
 import com.rocketpt.server.common.exception.UserException;
-import com.rocketpt.server.dao.OrganizationRequest;
+import com.rocketpt.server.dto.sys.OrganizationDTO;
 import com.rocketpt.server.dto.entity.Organization;
 import com.rocketpt.server.dto.sys.OrgTreeDTO;
-import com.rocketpt.server.dto.sys.OrgUserDTO;
-import com.rocketpt.server.dto.sys.PageDTO;
 import com.rocketpt.server.service.sys.OrganizationService;
 import com.rocketpt.server.service.sys.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,13 +48,13 @@ public class OrganizationController {
 
   @SaCheckPermission("organization:create")
   @PostMapping
-  public Result<Organization> createOrganization(@RequestBody @Valid OrganizationRequest request) {
+  public Result<Organization> createOrganization(@RequestBody @Valid OrganizationDTO request) {
     return Result.ok(organizationService.createOrganization(request.name(), request.type(), request.parentId()));
   }
 
   @SaCheckPermission("organization:update")
   @PutMapping("/{organizationId}")
-  public Result<Organization> updateOrganization(@PathVariable Long organizationId, @RequestBody @Valid OrganizationRequest request) {
+  public Result<Organization> updateOrganization(@PathVariable Long organizationId, @RequestBody @Valid OrganizationDTO request) {
     return Result.ok(organizationService.updateOrganization(organizationId, request.name()));
   }
 
