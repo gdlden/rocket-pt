@@ -16,6 +16,7 @@ import com.rocketpt.server.common.base.Result;
 import com.rocketpt.server.common.exception.RocketPTException;
 import com.rocketpt.server.common.exception.UserException;
 import com.rocketpt.server.dao.UserDao;
+import com.rocketpt.server.dto.entity.Organization;
 import com.rocketpt.server.dto.entity.UserCredentialEntity;
 import com.rocketpt.server.dto.entity.UserEntity;
 import com.rocketpt.server.dto.event.UserCreated;
@@ -34,6 +35,7 @@ import com.rocketpt.server.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -532,5 +534,17 @@ public class UserService extends ServiceImpl<UserDao, UserEntity> {
         }
         emailCodeService.setMailCode(param.getEmail());
 
+    }
+
+    public Result<ResPage> findOrgUsers(Pageable pageable, String username, Integer state, Organization organization) {
+        PageHelper.startPage(pageable);
+        List<UserEntity> list = this.list(Wrappers.lambdaQuery(UserEntity.class)
+                .eq(UserEntity::getUsername, username)
+                .eq(UserEntity::getState, state));
+        return Result.ok(PageUtil.getPage(list));
+    }
+
+    public boolean existsUsers(Organization organization) {
+        return false;
     }
 }
