@@ -1,7 +1,10 @@
 package com.rocketpt.server.controller.sys;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import com.github.pagehelper.page.PageParams;
 import com.rocketpt.server.common.CommonResultStatus;
+import com.rocketpt.server.common.base.OrderPageParam;
+import com.rocketpt.server.common.base.PageParam;
 import com.rocketpt.server.common.base.Result;
 import com.rocketpt.server.common.exception.UserException;
 import com.rocketpt.server.dto.sys.OrganizationDTO;
@@ -41,9 +44,9 @@ public class OrganizationController {
 
   @SaCheckPermission("user:view")
   @GetMapping("/{organizationId}/users")
-  public Result findOrgUsers(Pageable pageable, @RequestParam(required = false) String username, @RequestParam(required = false) Integer state, @PathVariable Long organizationId) {
+  public Result findOrgUsers(PageParam pageParams, @RequestParam(required = false) String username, @RequestParam(required = false) Integer state, @PathVariable Long organizationId) {
     Organization organization = organizationService.findOrganization(organizationId);
-    return userService.findOrgUsers(pageable, username, state, organization);
+    return userService.findOrgUsers(pageParams, username, state, organization);
   }
 
   @SaCheckPermission("organization:create")

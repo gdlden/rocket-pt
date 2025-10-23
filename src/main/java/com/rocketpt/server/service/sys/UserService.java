@@ -7,12 +7,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.page.PageParams;
 import com.rocketpt.server.common.CommonResultStatus;
 import com.rocketpt.server.common.DomainEventPublisher;
-import com.rocketpt.server.common.base.I18nMessage;
-import com.rocketpt.server.common.base.PageUtil;
-import com.rocketpt.server.common.base.ResPage;
-import com.rocketpt.server.common.base.Result;
+import com.rocketpt.server.common.base.*;
 import com.rocketpt.server.common.exception.RocketPTException;
 import com.rocketpt.server.common.exception.UserException;
 import com.rocketpt.server.dao.UserDao;
@@ -536,8 +534,8 @@ public class UserService extends ServiceImpl<UserDao, UserEntity> {
 
     }
 
-    public Result<ResPage> findOrgUsers(Pageable pageable, String username, Integer state, Organization organization) {
-        PageHelper.startPage(pageable);
+    public Result<ResPage> findOrgUsers(PageParam pageable, String username, Integer state, Organization organization) {
+        PageUtil.startPage(pageable);
         List<UserEntity> list = this.list(Wrappers.lambdaQuery(UserEntity.class)
                 .eq(UserEntity::getUsername, username)
                 .eq(UserEntity::getState, state));

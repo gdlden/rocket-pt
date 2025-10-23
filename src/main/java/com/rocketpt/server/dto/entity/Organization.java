@@ -1,10 +1,10 @@
 package com.rocketpt.server.dto.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -26,11 +26,15 @@ public class Organization extends EntityBase {
   private Type type;
 
 
+  @TableField(exist = false)
   private Organization parent;
+
+  private String parentId;
 
   private String parentIds;
 
 
+  @TableField(exist = false)
   private Set<Organization> children = new LinkedHashSet<>();
 
   public String makeSelfAsParentIds() {
@@ -89,14 +93,18 @@ public class Organization extends EntityBase {
     this.children = children;
   }
 
+  @RequiredArgsConstructor
   public enum Type {
     /**
      * 部门
      */
-    DEPARTMENT,
+    DEPARTMENT(0),
     /**
      * 岗位
      */
-    JOB
+    JOB(1);
+    @Getter
+    @EnumValue
+    private final int code;
   }
 }

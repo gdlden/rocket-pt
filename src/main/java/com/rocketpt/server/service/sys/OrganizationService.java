@@ -65,7 +65,7 @@ public class OrganizationService {
   }
 
   public List<OrgTreeDTO> findOrgTree(Long parentId) {
-    return organizationDao.selectList(Wrappers.lambdaQuery(Organization.class).eq(Organization::getParent, parentId)).stream()
+    return organizationDao.selectList(Wrappers.lambdaQuery(Organization.class).eq(Organization::getParentIds, parentId)).stream()
       .map(OrgTreeDTO::new)
       .collect(Collectors.toList());
   }
